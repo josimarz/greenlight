@@ -1,0 +1,31 @@
+services:
+  db:
+    container_name: db_container
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=${DB_USER:-master}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-password}
+      - PGDATA=/data/postgres
+      - POSTGRES_DB=${DB_NAME:-greenlight}
+    volumes:
+      - postgres:/data/postgres
+      - ./.docker/postgres:/docker-entrypoint-initdb.d
+    env_file:
+      - .env
+    ports:
+      - "$DB_PORT:$DB_PORT"
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres:

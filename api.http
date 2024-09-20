@@ -1,0 +1,70 @@
+### Variables
+@port = 4000
+@version = v1
+@apiurl = http://localhost:{{port}}/{{version}}
+
+### POST /tokens/authentication
+# @name authenticate
+POST {{apiurl}}/tokens/authentication
+Content-Type: application/json
+
+{
+    "email": "faith@example.com",
+    "password": "pa55word"
+}
+
+### GET /healthcheck
+GET {{apiurl}}/healthcheck
+Authorization: Bearer {{authenticate.response.body.authentication_token.token}}
+
+### GET /movies
+GET {{apiurl}}/movies?page_size=2&page=1
+
+### GET /movies/:id
+GET {{apiurl}}/movies/1
+Authorization: Bearer {{authenticate.response.body.authentication_token.token}}
+
+### POST /movies
+POST {{apiurl}}/movies
+Content-Type: application/json
+
+{
+    "title": "The Breakfast Club",
+    "year": 1986,
+    "runtime": "96 mins",
+    "genres": ["drama"]
+}
+
+### PATCH /movies/:id
+PATCH  {{apiurl}}/movies/2
+Content-Type: application/json
+
+{
+    "title": null,
+    "year": null
+}
+
+### DELETE /movies/:id
+DELETE {{apiurl}}/movies/1
+Authorization: Bearer {{authenticate.response.body.authentication_token.token}}
+
+### POST /users
+POST {{apiurl}}/users
+Content-Type: application/json
+
+{
+    "name": "Grace Smith",
+    "email": "grace@example.com",
+    "password": "pa55word"
+}
+
+### PUT /users/activated
+PUT {{apiurl}}/users/activated
+Content-Type: application/json
+
+{
+    "token": "72672ECFVFCDFZHZET5IH56REE"
+}
+
+### GET /debug/vars
+GET http://localhost:4000/debug/vars
