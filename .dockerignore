@@ -1,0 +1,5 @@
+.vscode
+.gitignore
+vendor
+docker-compose.yml
+Makefile

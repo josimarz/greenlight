@@ -22,6 +22,17 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+  api:
+    container_name: greenlight-api
+    build:
+      context: .
+    ports:
+      - "4000:4000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
 
 networks:
   app-network:

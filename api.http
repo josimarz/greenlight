@@ -1,7 +1,8 @@
 ### Variables
+@ip = localhost
 @port = 4000
 @version = v1
-@apiurl = http://localhost:{{port}}/{{version}}
+@apiurl = http://{{ip}}:{{port}}/{{version}}
 
 ### POST /tokens/authentication
 # @name authenticate
@@ -15,7 +16,6 @@ Content-Type: application/json
 
 ### GET /healthcheck
 GET {{apiurl}}/healthcheck
-Authorization: Bearer {{authenticate.response.body.authentication_token.token}}
 
 ### GET /movies
 GET {{apiurl}}/movies?page_size=2&page=1
@@ -67,4 +67,4 @@ Content-Type: application/json
 }
 
 ### GET /debug/vars
-GET http://localhost:4000/debug/vars
+GET http://{{ip}}:{{port}}/debug/vars
